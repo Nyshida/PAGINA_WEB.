@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMERICAN-LOOK Oruro | Catálogo Oficial</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0b2545;
+            --accent-color: #d90429;
+            --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            color: #212529;
+            position: relative;
+        }
+
+        /* Marca de agua de la Virgen del Socavón en el fondo blanco */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/Monumento_Virgen_del_Socav%C3%B3n_Oruro.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 50vh auto;
+            opacity: 0.035;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .texto-dorado {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .numero-negro, span.texto-precio, h4.texto-precio, .precio-producto {
+            color: #111111 !important;
+            font-weight: 700;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            background-color: #ffffff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Imagen completa sin recortes en el catálogo */
+        .carousel-item img {
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            height: 280px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .carousel-item img:hover {
+            opacity: 0.9;
+        }
+
+        /* Ocultar completamente cualquier flecha o indicador en las tarjetas del catálogo principal */
+        #contenedorProductos .carousel-control-prev, 
+        #contenedorProductos .carousel-control-next, 
+        #contenedorProductos .carousel-indicators {
+            display: none !important;
+        }
+
+        /* Estilo para las flechas cuando SÍ se abre el modal de zoom */
+        #modalZoom .carousel-control-prev,
+        #modalZoom .carousel-control-next {
+            width: 45px;
+            height: 45px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.9;
+        }
+        #modalZoom .carousel-control-prev:hover,
+        #modalZoom .carousel-control-next:hover {
+            opacity: 1;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Botón "X" personalizado en negro con fondo blanco */
+        .btn-cerrar-zoom {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 1056;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .btn-cerrar-zoom i {
+            color: #000000;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .btn-cerrar-zoom:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.05);
+        }
+
+        .filter-btn {
+            border-radius: 20px;
+            font-weight: 500;
+            padding: 6px 16px;
+            border: 1px solid #ced4da;
+            background-color: #fff;
+            color: #495057;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 0.6rem 0.9rem;
+            border: 1px solid #dce0e3;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(11, 37, 69, 0.15);
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #20ba5a;
+            color: white;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        footer a {
+            color: #dce0e3;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-3 sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 text-white" href="#inicio">
+                AMERICAN-LOOK <span class="texto-dorado">Oruro</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end gap-3" id="navbarNav">
+                <ul class="navbar-nav align-items-lg-center gap-2">
+                    <li class="nav-item"><a class="nav-link text-white active" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#catalogo">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#nosotros">Sobre Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#contacto">Contacto</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+                    <button class="btn btn-outline-light btn-sm position-relative px-3" data-bs-toggle="modal" data-bs-target="#modalCarrito">
+                        <i class="fas fa-shopping-cart"></i> Carrito
+                        <span id="contadorCarrito" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger numero-negro text-white">0</span>
+                    </button>
+                    <a href="admin.html" class="btn btn-outline-warning btn-sm px-3 rounded-pill fw-semibold"><i class="fas fa-lock me-1"></i> Admin</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Inicio / Hero -->
+    <header id="inicio" class="bg-dark text-white py-5 position-relative overflow-hidden" style="background: linear-gradient(rgba(11,37,69,0.9), rgba(11,37,69,0.9)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80') center/cover;">
+        <div class="container py-5 text-center position-relative z-1">
+            <h1 class="display-4 fw-bold mb-3">Moda Americana Exclusiva en <span class="texto-dorado">Oruro</span></h1>
+            <p class="lead text-light mb-4 mx-auto" style="max-width: 650px;">Las mejores marcas, chamarras, jeans y poleras importadas directamente con calidad garantizada. ¡Viste con estilo único!</p>
+            <a href="#catalogo" class="btn btn-danger btn-lg px-4 fw-semibold shadow">Ver Catálogo Disponible</a>
+        </div>
+    </header>
+
+    <!-- Contenido Principal (Catálogo) -->
+    <div class="container my-5" id="catalogo">
+        <div class="row align-items-center mb-4 g-3">
+            <div class="col-lg-5">
+                <h2 class="fw-bold mb-1 text-dark">Catálogo Exclusivo</h2>
+                <p class="text-muted mb-0 small">Encuentra prendas americanas de primera calidad en Bolivia.</p>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+                <div class="d-flex align-items-center gap-2 bg-white border rounded-8 px-3 py-2 shadow-sm h-100" style="border-radius: 8px;">
+                    <span class="text-danger fs-5"><i class="fas fa-map-marker-alt"></i></span>
+                    <span class="fw-semibold text-secondary small mb-0">Envíos a todas las ciudades</span>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="input-group shadow-sm">
+                    <span class="input-group-text bg-white border-end-0"><i class="fas fa-search text-muted"></i></span>
+                    <input type="text" id="inputBusqueda" class="form-control border-start-0 ps-0" placeholder="Buscar por título, talla o detalles..." onkeyup="aplicarFiltrosCompletos()">
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 mb-4" id="botonesCategorias">
+            <button class="filter-btn active" onclick="seleccionarCategoria('TODAS', this)">Todas</button>
+            <button class="filter-btn" onclick="seleccionarCategoria('Chamarras', this)">Chamarras</button>
+            <button class="filter-btn" onclick="seleccionarCategoria('Jeans', this)">Jeans</button>
+            <button class="filter-btn" onclick="seleccionarCategoria('Poleras', this)">Poleras</button>
+            <button class="filter-btn" onclick="seleccionarCategoria('Sudaderas', this)">Sudaderas</button>
+        </div>
+        
+        <div class="row g-4" id="contenedorProductos"></div>
+    </div>
+
+    <!-- Sección Sobre Nosotros -->
+    <section id="nosotros" class="bg-white py-5 border-top border-bottom">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=800&q=80" alt="Tienda American Look" class="img-fluid rounded shadow">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="fw-bold mb-3">Sobre <span class="texto-dorado">AMERICAN-LOOK</span></h2>
+                    <p class="text-muted">Somos una tienda líder ubicada en el corazón de **Oruro**, dedicada a seleccionar y traer las mejores prendas de ropa americana de marca y alta durabilidad. Nuestro compromiso es ofrecerte un estilo auténtico, moderno y exclusivo que se adapte a tu personalidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer id="contacto" class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h4 class="fw-bold mb-3"><span class="text-white">AMERICAN-LOOK</span> <span class="texto-dorado">Oruro</span></h4>
+                    <p class="small text-light opacity-75">Tu tienda de confianza en ropa americana en Oruro y envíos a toda Bolivia.</p>
+                    <p class="small mb-1"><i class="fas fa-phone-alt me-2 text-danger"></i> WhatsApp Directo: <strong class="numero-negro text-white">+591 67253808</strong></p>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="fw-semibold mb-3">Enlaces Rápidos</h5>
+                    <ul class="list-unstyled small d-flex flex-column gap-2">
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#catalogo">Catálogo de Prendas</a></li>
+                        <li><a href="#nosotros">Sobre Nosotros</a></li>
+                        <li><a href="admin.html">Panel de Administración</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="fw-semibold mb-3">Síguenos</h5>
+                    <div class="d-flex gap-3 fs-4 mb-3">
+                        <a href="https://facebook.com" target="_blank" class="text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="https://instagram.com" target="_blank" class="text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/59167253808" target="_blank" class="text-white"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <div class="text-center small text-light opacity-50">
+                &copy; 2026 <span class="text-white">AMERICAN-LOOK</span> <span class="texto-dorado">Oruro</span> - Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Zoom -->
+    <div class="modal fade" id="modalZoom" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered w-auto position-relative" style="max-width: 90vw;">
+            <button type="button" class="btn-cerrar-zoom" data-bs-dismiss="modal" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-content bg-transparent border-0 shadow-none">
+                <div class="modal-body text-center p-0">
+                    <div id="carruselModalZoom" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-indicators" id="modalZoomIndicators"></div>
+                        <div class="carousel-inner" id="modalZoomInner"></div>
+                        <div id="modalZoomControls"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Carrito -->
+    <div class="modal fade" id="modalCarrito" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-shopping-cart me-2"></i> Prendas Seleccionadas</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="listaCarrito" class="list-group mb-3"></div>
+                    <div id="seccionTotal" class="border-top pt-3 d-none">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold mb-0">Total a Pagar:</h5>
+                            <h4 id="precioTotalCarrito" class="texto-precio fw-bold mb-0">Bs. 0.00</h4>
+                        </div>
+                    </div>
+                    <div id="carritoVacio" class="text-center text-muted py-4">
+                        <i class="fas fa-box-open fa-2x mb-2"></i>
+                        <p class="mb-0">No has agregado ninguna prenda al carrito todavía.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                    <a id="btnComprarTodo" href="#" target="_blank" class="btn btn-whatsapp btn-sm d-none">
+                        <i class="fab fa-whatsapp me-1"></i> Consultar Todo por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Conexión Firebase y Lógica del Catálogo -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7I6kAzHBtNQMn0g_7LAPLer5fKpub-E",
+            authDomain: "american-look.firebaseapp.com",
+            projectId: "american-look",
+            storageBucket: "american-look.firebasestorage.app",
+            messagingSenderId: "632009260167",
+            appId: "1:632009260167:web:248d5d076c46d09ff30c22",
+            measurementId: "G-RY5V17QQY3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let todasLasPrendas = [];
+        let categoriaSeleccionada = 'TODAS';
+        let carrito = JSON.parse(localStorage.getItem('american_look_carrito')) || [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            onSnapshot(collection(db, "prendas"), (snapshot) => {
+                todasLasPrendas = [];
+                snapshot.forEach((doc) => {
+                    todasLasPrendas.push({ idDoc: doc.id, ...doc.data() });
+                });
+                aplicarFiltrosCompletos();
+            });
+            actualizarContadorCarrito();
+        });
+
+        window.seleccionarCategoria = function(cat, btn) {
+            categoriaSeleccionada = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            aplicarFiltrosCompletos();
+        };
+
+        window.aplicarFiltrosCompletos = function() {
+            const texto = document.getElementById('inputBusqueda').value.toLowerCase();
+            const contenedor = document.getElementById('contenedorProductos');
+            contenedor.innerHTML = '';
+
+            let filtradas = todasLasPrendas.filter(p => {
+                let disp = p.disponibilidad || "Disponible";
+                let matchDisp = (disp === "Disponible");
+                let matchCat = (categoriaSeleccionada === 'TODAS' || p.categoria === categoriaSeleccionada);
+                let matchTexto = p.titulo.toLowerCase().includes(texto) || p.descripcion.toLowerCase().includes(texto) || p.talla.toLowerCase().includes(texto);
+                return matchDisp && matchCat && matchTexto;
+            });
+
+            if (filtradas.length === 0) {
+                contenedor.innerHTML = `<div class="col-12 text-center py-5"><p class="text-muted fs-5">No se encontraron prendas disponibles.</p></div>`;
+                return;
+            }
+
+            filtradas.forEach(p => {
+                let imagenes = [];
+                try { imagenes = p.jsonImagenes ? JSON.parse(p.jsonImagenes) : [p.imagen]; } catch(e) { imagenes = [p.imagen]; }
+
+                let carouselId = `carousel_${p.id || p.idDoc}`;
+                let indicatorsHtml = '';
+                let innerHtml = '';
+
+                imagenes.forEach((imgSrc, idx) => {
+                    indicatorsHtml += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${idx}" ${idx === 0 ? 'class="active"' : ''}></button>`;
+                    innerHtml += `<div class="carousel-item ${idx === 0 ? 'active' : ''}"><img src="${imgSrc}" class="d-block w-100" alt="${p.titulo}" onclick="abrirZoomModal(${JSON.stringify(imagenes).replace(/"/g, '&quot;')}, ${idx})"></div>`;
+                });
+
+                let controlesHtml = imagenes.length > 1 ? `
+                    <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                ` : '';
+
+                contenedor.innerHTML += `
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="card h-100 position-relative">
+                            <span class="position-absolute top-0 end-0 m-3 badge bg-dark text-white shadow-sm">${p.estado || 'Nuevo'}</span>
+                            <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">${indicatorsHtml}</div>
+                                <div class="carousel-inner">${innerHtml}</div>
+                                ${controlesHtml}
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="card-title fw-bold text-dark mb-0">${p.titulo}</h5>
+                                    <span class="badge bg-light text-dark border">${p.talla}</span>
+                                </div>
+                                <p class="text-muted small mb-2">${p.descripcion}</p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center pt-2 border-top">
+                                    <span class="precio-producto fs-5">Bs. ${Number(p.precio).toFixed(2)}</span>
+                                    <button class="btn btn-outline-primary btn-sm rounded-pill px-3" onclick="agregarAlCarrito('${p.idDoc}')"><i class="fas fa-cart-plus me-1"></i> Interés</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        };
+
+        window.abrirZoomModal = function(imagenes, indexInicio) {
+            let indicators = '';
+            let inner = '';
+            imagenes.forEach((src, idx) => {
+                indicators += `<button type="button" data-bs-target="#carruselModalZoom" data-bs-slide-to="${idx}" ${idx === indexInicio ? 'class="active"' : ''}></button>`;
+                inner += `<div class="carousel-item ${idx === indexInicio ? 'active' : ''}"><img src="${src}" class="d-block mx-auto rounded" style="max-height: 80vh; max-width: 100%; object-fit: contain;"></div>`;
+            });
+            let controls = imagenes.length > 1 ? `
+                <button class="carousel-control-prev" type="button" data-bs-target="#carruselModalZoom" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carruselModalZoom" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+            ` : '';
+
+            document.getElementById('modalZoomIndicators').innerHTML = indicators;
+            document.getElementById('modalZoomInner').innerHTML = inner;
+            document.getElementById('modalZoomControls').innerHTML = controls;
+            new bootstrap.Modal(document.getElementById('modalZoom')).show();
+        };
+
+        window.agregarAlCarrito = function(idDoc) {
+            let prenda = todasLasPrendas.find(p => p.idDoc === idDoc);
+            if (prenda && !carrito.some(item => item.idDoc === idDoc)) {
+                carrito.push(prenda);
+                localStorage.setItem('american_look_carrito', JSON.stringify(carrito));
+                actualizarContadorCarrito();
+                alert("¡Prenda añadida a tus favoritos/interés!");
+            }
+        };
+
+        window.actualizarContadorCarrito = function() {
+            document.getElementById('contadorCarrito').innerText = carrito.length;
+            const lista = document.getElementById('listaCarrito');
+            const seccionTotal = document.getElementById('seccionTotal');
+            const carritoVacio = document.getElementById('carritoVacio');
+            const btnComprarTodo = document.getElementById('btnComprarTodo');
+
+            lista.innerHTML = '';
+            if (carrito.length === 0) {
+                carritoVacio.classList.remove('d-none');
+                seccionTotal.classList.add('d-none');
+                btnComprarTodo.classList.add('d-none');
+                return;
+            }
+
+            carritoVacio.classList.add('d-none');
+            seccionTotal.classList.remove('d-none');
+            btnComprarTodo.classList.remove('d-none');
+
+            let total = 0;
+            carrito.forEach((item, index) => {
+                total += Number(item.precio);
+                lista.innerHTML += `
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0 fw-bold">${item.titulo}</h6>
+                            <small class="text-muted">Talla: ${item.talla} | Bs. ${Number(item.precio).toFixed(2)}</small>
+                        </div>
+                        <button class="btn btn-outline-danger btn-sm border-0" onclick="quitarDelCarrito(${index})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+            });
+
+            document.getElementById('precioTotalCarrito').innerText = `Bs. ${total.toFixed(2)}`;
+            let mensajeWsp = `Hola AMERICAN-LOOK, estoy interesado en las siguientes prendas:\n`;
+            carrito.forEach(i => { mensajeWsp += `- ${i.titulo} (Talla: ${i.talla}) - Bs. ${i.precio}\n`; });
+            mensajeWsp += `Total estimado: Bs. ${total.toFixed(2)}`;
+            btnComprarTodo.href = `https://wa.me/59167253808?text=${encodeURIComponent(mensajeWsp)}`;
+        };
+
+        window.quitarDelCarrito = function(index) {
+            carrito.splice(index, 1);
+            localStorage.setItem('american_look_carrito', JSON.stringify(carrito));
+            actualizarContadorCarrito();
+        };
+    </script>
+</body>
+</html>
